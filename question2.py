@@ -17,13 +17,12 @@ for line in test_data:
         else:
             lost_ping[ip] += 1
             if lost_ping[ip] == N:
-                print("ip:" + ip)
-                print("breakdown:", end = "")
+                print("Breakdown ip:" + ip, end = " ")
                 print_day(ip_day_dic[ip])
                 breakdown_ls.append(ip)
     else:
         if ip in breakdown_ls:
-            print("restoration:", end = "")
+            print("Restoration ip:" + ip, end = " ")
             print_day(day)
             breakdown_ls.remove(ip)
 
