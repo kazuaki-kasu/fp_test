@@ -21,6 +21,17 @@ Restoration ip:{故障したサーバーのIP} {復旧した日付}
 ```
 上記のフォーマットで結果が出力されます。
 
+### 実行結果
+サンプルデータ(log_data.txt)を読み込みquestion1.pyを実行した結果は以下の通りです。
+応答結果がタイムアウトしたサーバーのipと日付がそれぞれ出力されています。
+```
+kazuaki$ /opt/anaconda3/bin/python /Users/kazuaki/job_hunting/fixpoint/question1.py
+Breakdown ip:10.20.30.1/16 2020/10/19 13:33:24
+Restoration ip:10.20.30.1/16 2020/10/19 13:33:44
+Breakdown ip:10.20.30.2/16 2020/10/19 13:33:35
+Restoration ip:10.20.30.2/16 2020/10/19 13:33:45
+```
+
 ## question2
 ### 実行コマンド
 ```
@@ -33,6 +44,18 @@ N
 設問2。<br>
 pingのタイムアウトがN回以上計測されたサーバーのIP、初めてタイムアウトを確認した日付、復旧した日付を出力するプログラムです。<br>
 出力のフォーマットは設問1と同じです。<br>
+
+
+### 実行結果
+サンプルデータ(log_data.txt)を読み込みプログラムを実行した結果は以下の通りです。
+なお結果は、引数Nを2とした時のものです。
+応答結果が2回以上タイムアウトしたipのみが出力されています。
+```
+kazuaki$ /opt/anaconda3/bin/python /Users/kazuaki/job_hunting/fixpoint/question2.py
+2
+Breakdown ip:10.20.30.1/16 2020/10/19 13:33:24
+Restoration ip:10.20.30.1/16 2020/10/19 13:33:44
+```
 
 ## question3
 ### 実行コマンド
@@ -53,3 +76,15 @@ Overload ip:{過負荷状態のサーバーのIP} {過負荷状態を確認し�
 Load Reduction ip:{負荷状態を回復したサーバーのIP} {負荷状態を回復した日付}
 ```
 上記のフォーマットで結果が出力されます。
+
+### 実行結果
+サンプルデータ(log_data.txt)を読み込みプログラムを実行した結果は以下のようになりました。
+なお結果は引数N,m,tを2,2,200とした時のものです。
+```
+kazuaki$ /opt/anaconda3/bin/python /Users/kazuaki/job_hunting/fixpoint/question3.py
+2
+2 200
+Overload ip:10.20.30.1/16 2020/10/19 13:32:24
+Breakdown ip:10.20.30.1/16 2020/10/19 13:33:24
+Restoration ip:10.20.30.1/16 2020/10/19 13:33:44
+```
