@@ -4,28 +4,37 @@ lost_ping = {}  #pingがタイムアウトしたサーバーのipとタイムア
 ip_day_dic = {} #pingがタイムアウトしたサーバーのipと最初にタイムアウトした日付
 breakdown_ls = []   #故障と判断されたサーバーのip
 
-subnet_dic = {}
+nw_dic = {} 
 network_ls = []
 
 def print_day(day):
     print("{0}/{1}/{2} {3}:{4}:{5}".format(day[:4],day[4:6],day[6:8],day[8:10],day[10:12],day[12:14]))
 
-for line in test_data:
-    # print line
-    day,ip,state = map(str, line.split(","))
-
+def ip_to_net(ip):    #ipをネットワークアドレスに変換する関数
     nw,pre = ip.split("/")
     nw = nw.split(".")
     sub_mask = (32-int(pre))/8
     for i in range(int(sub_mask)):
         nw[-i-1] = "0"
     nw = ".".join(nw)
-    # print(nw, "," , pre)
-    if nw in subnet_dic.keys():
-        subnet_dic[nw].append(state)
+    return nw
+
+for line in test_data:
+    # print line
+    day,ip,state = map(str, line.split(","))
+    nw = ip_to_net(ip)
+    if nw in nw_dic.keys():
+        nw_dic[nw].append(state)
     else:
-        subnet_dic[nw] = [state]
-        # if subnet_dic[nw]
+        nw_dic[nw] = [state]
+        if nw_dic[nw].count("-\n") == len(nw_dic[nw]) and nw not in network_ls:
+            print("Switch Breakdown address:" + nw, end = " ")
+            print_day(day)
+            network_ls.append(nw)
+        elif nw_dic[nw].count("-\n") != len(nw_dic[nw]) and nw in network_ls:
+            print("Switch Restoration address:" + nw, end = " ")
+            print_day(day)
+            network_ls.remove(nw)
 
     if state == "-" or state == "-\n":
         if ip not in lost_ping.keys():
@@ -42,7 +51,5 @@ for line in test_data:
             print("Restoration ip:" + ip, end = " ")
             print_day(day)
             breakdown_ls.remove(ip)
-
-# print(lost_ping)
 
 test_data.close()
